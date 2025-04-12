@@ -5,8 +5,6 @@ A simple command-line To-Do List application that allows users to manage tasks.
 
 from typing import List
 
-#test
-
 class Todo:
     """A simple To-Do list application that manages tasks in memory.
 
@@ -17,12 +15,14 @@ class Todo:
     def __init__(self) -> None:
         """Initialize a new Todo instance with an empty task list."""
         self.tasks: List[str] = []
+        self.priorities: List[str] = []
 
-    def add_task(self, task: str) -> None:
-        """Add a new task to the list.
+    def add_task(self, task: str, priority: str) -> None:
+        """Add a new task and task priority to the list.
 
         Args:
             task: The task description to add.
+            priority: The priority description to add
 
         Note:
             Prints a success message if the task is added,
@@ -33,6 +33,12 @@ class Todo:
             print(f"Task '{task}' added successfully.")
         else:
             print("Task cannot be empty.")
+        
+        if ((priority == "high") or (priority == "medium") or (priority == "low")):
+            self.priorities.append(priority)
+            print(f"Task '{task}' priority set as: {priority}")
+        else:
+            print("Prioity must be set as low, medium, or high")
 
     def delete_task(self, task: str) -> None:
         """Delete a task from the list.
@@ -61,8 +67,10 @@ class Todo:
             print("No tasks available.")
         else:
             print("To-Do List:")
-            for i, task in enumerate(self.tasks, start=1):
+            for i, task, in enumerate(self.tasks, start=1):
                 print(f"{i}. {task}")
+            for i, priority, in enumerate(self.priorities, start=1):
+                print(f"priority {i}. {priority}")
 
 
 def main():
@@ -84,7 +92,8 @@ def main():
 
         if choice == "1":
             task = input("Enter the task: ")
-            todo.add_task(task)
+            priority = input("Enter priority: ")
+            todo.add_task(task, priority)
         elif choice == "2":
             task = input("Enter the task to delete: ")
             todo.delete_task(task)
